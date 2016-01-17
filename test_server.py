@@ -1,5 +1,5 @@
 import threading, time
-import SimpleWebSocketServer as swws
+import SimpleWebSocketServer as swss
 
 
 clients = []
@@ -19,7 +19,7 @@ def we_send_messages():
         time.sleep(1)
 
 
-class MyWebsocketExample(swws.WebSocket):
+class MyWebsocketExample(swss.WebSocket):
 
     def handleConnected(self):
         with clients_lock:
@@ -35,5 +35,5 @@ threading.Thread(target = we_send_messages).start()
 # selectInterval is required in this next call, otherwise the server gets blocked at
 # a select() call which only unblocks when there's a connection or disconnection...
 
-server = swws.SimpleWebSocketServer('localhost', 8001, MyWebsocketExample, selectInterval = 0.1)
+server = swss.SimpleWebSocketServer('localhost', 8001, MyWebsocketExample, selectInterval = 0.1)
 server.serveforever()

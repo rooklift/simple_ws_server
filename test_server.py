@@ -18,6 +18,9 @@ def we_send_messages():
                     pass
         time.sleep(1)
 
+def server_start():
+    server = swss.SimpleWebSocketServer('localhost', 8001, MyWebsocketExample, selectInterval = 0.1)
+    server.serveforever()
 
 class MyWebsocketExample(swss.WebSocket):
 
@@ -31,9 +34,5 @@ class MyWebsocketExample(swss.WebSocket):
 
 
 threading.Thread(target = we_send_messages).start()
+threading.Thread(target = server_start).start()
 
-# selectInterval is required in this next call, otherwise the server gets blocked at
-# a select() call which only unblocks when there's a connection or disconnection...
-
-server = swss.SimpleWebSocketServer('localhost', 8001, MyWebsocketExample, selectInterval = 0.1)
-server.serveforever()

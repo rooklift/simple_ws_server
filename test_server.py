@@ -32,6 +32,9 @@ class MyWebsocketExample(swss.WebSocket):
         with clients_lock:
             clients.remove(self)
 
+    def handleMessage(self):
+        print(self.data)
+
 
 threading.Thread(target = we_send_messages).start()
 threading.Thread(target = server_start).start()
